@@ -4,8 +4,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import ru.yandex.practicum.model.HubEvent;
-import ru.yandex.practicum.model.SensorEvent;
+import ru.yandex.practicum.grpc.telemetry.event.HubEvent;
+import ru.yandex.practicum.grpc.telemetry.event.SensorEvent;
 import ru.yandex.practicum.service.CollectorService;
 
 @RestController

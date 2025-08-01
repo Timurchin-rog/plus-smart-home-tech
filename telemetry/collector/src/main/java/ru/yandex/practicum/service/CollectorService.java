@@ -1,7 +1,7 @@
 package ru.yandex.practicum.service;
 
-import ru.yandex.practicum.model.HubEvent;
-import ru.yandex.practicum.model.SensorEvent;
+import ru.yandex.practicum.grpc.telemetry.event.HubEvent;
+import ru.yandex.practicum.grpc.telemetry.event.SensorEvent;
 
 public interface CollectorService {
 
