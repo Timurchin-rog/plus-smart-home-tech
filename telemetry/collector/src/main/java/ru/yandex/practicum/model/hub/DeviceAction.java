@@ -20,6 +20,5 @@ public class DeviceAction {
     @NotNull
     DeviceActionType type;
 
-    @NotBlank
     int value;
 }

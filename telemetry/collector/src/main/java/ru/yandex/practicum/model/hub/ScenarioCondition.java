@@ -21,6 +21,6 @@ public class ScenarioCondition {
     ScenarioConditionType type;
     @NotNull
     ScenarioConditionOperation operation;
-    @NotNull
+
     int value;
 }
