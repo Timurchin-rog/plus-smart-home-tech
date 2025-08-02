@@ -1,5 +1,7 @@
 package ru.yandex.practicum.model.hub;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,8 +15,12 @@ import ru.yandex.practicum.model.hub.enums.ScenarioConditionType;
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ScenarioCondition {
+    @NotBlank
     String sensorId;
+    @NotNull
     ScenarioConditionType type;
+    @NotNull
     ScenarioConditionOperation operation;
+    @NotNull
     int value;
 }

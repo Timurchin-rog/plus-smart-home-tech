@@ -20,11 +20,11 @@ import java.util.List;
 public class ScenarioAddedEvent extends HubEvent {
     @Size(min = 3, max = 255)
     @NotBlank
-    private String name;
+    String name;
     @NotEmpty
-    private List<ScenarioCondition> conditions;
+    List<ScenarioCondition> conditions;
     @NotEmpty
-    private List<DeviceAction> actions;
+    List<DeviceAction> actions;
 
     @Override
     public HubEventType getType() {

@@ -1,5 +1,6 @@
 package ru.yandex.practicum.model.sensor;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +14,9 @@ import ru.yandex.practicum.model.sensor.enums.SensorEventType;
 @ToString(callSuper = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class LightSensorEvent extends SensorEvent {
+    @NotNull
     Integer linkQuality;
+    @NotNull
     Integer luminosity;
 
     @Override

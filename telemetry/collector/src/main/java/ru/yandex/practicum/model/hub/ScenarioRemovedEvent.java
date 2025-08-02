@@ -17,7 +17,7 @@ import ru.yandex.practicum.model.hub.enums.HubEventType;
 public class ScenarioRemovedEvent extends HubEvent {
     @NotBlank
     @Size(min = 3)
-    private String name;
+    String name;
 
     @Override
     public HubEventType getType() {

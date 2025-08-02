@@ -1,5 +1,6 @@
 package ru.yandex.practicum.model.hub;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -15,7 +16,7 @@ import ru.yandex.practicum.model.hub.enums.HubEventType;
 @ToString(callSuper = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class DeviceAddedEvent extends HubEvent {
-    @NotNull
+    @NotBlank
     String id;
     @NotNull
     DeviceType deviceType;
