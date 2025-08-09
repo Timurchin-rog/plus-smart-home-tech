@@ -1,6 +1,7 @@
 package ru.yandex.practicum.service.hub;
 
 import org.springframework.stereotype.Component;
+import ru.yandex.practicum.grpc.telemetry.event.DeviceAddedEventProto;
 import ru.yandex.practicum.grpc.telemetry.event.HubEventProto;
 import ru.yandex.practicum.kafka.KafkaEventProducer;
 import ru.yandex.practicum.kafka.telemetry.event.DeviceAddedEventAvro;
@@ -21,9 +22,10 @@ public class DeviceAddedEventHandler extends BaseHubEventHandler<DeviceAddedEven
 
     @Override
     protected DeviceAddedEventAvro mapToAvro(HubEventProto eventProto) {
+        DeviceAddedEventProto deviceAddedEvent = eventProto.getDeviceAdded();
         return DeviceAddedEventAvro.newBuilder()
-                .setId(eventProto.getDeviceRemoved().getId())
-                .setType(EnumMapper.mapEnum(eventProto.getPayloadCase(), DeviceTypeAvro.class))
+                .setId(deviceAddedEvent.getId())
+                .setType(EnumMapper.mapEnum(deviceAddedEvent.getType(), DeviceTypeAvro.class))
                 .build();
     }
 

@@ -41,11 +41,20 @@ public class ScenarioAddedEventHandler extends BaseHubEventHandler<ScenarioAdded
                     .setSensorId(condition.getSensorId())
                     .setType(EnumMapper.mapEnum(condition.getType(), ConditionTypeAvro.class))
                     .setOperation(EnumMapper.mapEnum(condition.getOperation(), ConditionOperationAvro.class))
-                    .setValue(condition.getIntValue())
+                    .setValue(mapUnionValue(condition))
                     .build();
             listAvro.add(conditionAvro);
         }
         return listAvro;
+    }
+
+    private Object mapUnionValue(ScenarioConditionProto condition) {
+        if (condition.hasBoolValue())
+            return condition.getBoolValue();
+        else if (condition.hasIntValue())
+            return condition.getIntValue();
+        else
+            return null;
     }
 
     private List<DeviceActionAvro> mapActionsToAvro(List<DeviceActionProto> actions) {
