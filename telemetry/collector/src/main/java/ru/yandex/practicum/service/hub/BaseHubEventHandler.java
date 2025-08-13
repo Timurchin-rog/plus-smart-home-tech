@@ -1,9 +1,8 @@
 package ru.yandex.practicum.service.hub;
 
 import com.google.protobuf.Timestamp;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.avro.specific.SpecificRecordBase;
+import org.springframework.beans.factory.annotation.Value;
 import ru.yandex.practicum.grpc.telemetry.event.HubEventProto;
 import ru.yandex.practicum.kafka.KafkaEventProducer;
 import ru.yandex.practicum.kafka.telemetry.event.HubEventAvro;
@@ -11,10 +10,15 @@ import ru.yandex.practicum.service.HubEventHandler;
 
 import java.time.Instant;
 
-@RequiredArgsConstructor
-@Slf4j
 public abstract class BaseHubEventHandler<T extends SpecificRecordBase> implements HubEventHandler {
     protected final KafkaEventProducer producer;
+
+    @Value("${collector.kafka.topics.hubs-events}")
+    private String hubsTopic;
+
+    public BaseHubEventHandler(KafkaEventProducer producer) {
+        this.producer = producer;
+    }
 
     protected abstract T mapToAvro(HubEventProto eventProto);
 
@@ -32,8 +36,7 @@ public abstract class BaseHubEventHandler<T extends SpecificRecordBase> implemen
                 .setPayload(payload)
                 .build();
 
-        log.info("Сообщение для отправки: {}", eventAvro);
-        producer.send("telemetry.hubs.v1", eventAvro);
+        producer.send(hubsTopic, eventAvro);
     }
 
     protected Instant mapToInstant(Timestamp timestamp) {
