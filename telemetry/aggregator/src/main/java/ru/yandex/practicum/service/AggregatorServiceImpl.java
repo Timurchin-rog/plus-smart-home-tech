@@ -18,7 +18,7 @@ import java.util.Optional;
 public class AggregatorServiceImpl implements AggregatorService {
     private Map<String, SensorsSnapshotAvro> snapshots = new HashMap<>();
 
-    @Value("${collector.kafka.topics.snapshots-events}")
+    @Value("${kafka.topics.snapshots-events}")
     private String snapshotsTopic;
 
     @Override
