@@ -16,13 +16,13 @@ import java.util.Properties;
 public class KafkaClientConfig {
 
     @Bean
-    @ConfigurationProperties(prefix = "collector.kafka.producer.properties")
+    @ConfigurationProperties(prefix = "kafka.producer.properties")
     public Properties getProducerProperties() {
         return new Properties();
     }
 
     @Bean
-    @ConfigurationProperties(prefix = "collector.kafka.consumer.properties")
+    @ConfigurationProperties(prefix = "kafka.consumer.properties")
     public Properties getConsumerProperties() {
         return new Properties();
     }
