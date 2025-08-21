@@ -48,7 +48,7 @@ public class HubEventProcessor implements Runnable {
                     if (handlers.containsKey(payloadName)) {
                         handlers.get(payloadName).handle(event);
                     } else {
-                        throw new IllegalArgumentException("Нет обработчика для события " + event);
+                        throw new IllegalArgumentException(String.format("Нет обработчика для события: %s", event));
                     }
                 }
                 consumer.commitSync();

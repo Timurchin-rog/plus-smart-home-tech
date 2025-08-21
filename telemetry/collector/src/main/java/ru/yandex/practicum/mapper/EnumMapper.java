@@ -6,7 +6,9 @@ public class EnumMapper {
             String name = source.name();
             return Enum.valueOf(targetClass, name);
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Не удалось найти соответствующее значение для " + source, e);
+            throw new IllegalArgumentException(
+                    String.format("Не удалось найти соответствующее значение для: %s", source), e
+            );
         }
     }
 }
