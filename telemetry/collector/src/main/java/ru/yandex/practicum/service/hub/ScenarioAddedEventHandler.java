@@ -1,11 +1,13 @@
 package ru.yandex.practicum.service.hub;
 
+import org.apache.avro.specific.SpecificRecordBase;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
+import ru.yandex.practicum.config.kafka.KafkaConfig;
 import ru.yandex.practicum.grpc.telemetry.event.DeviceActionProto;
 import ru.yandex.practicum.grpc.telemetry.event.HubEventProto;
 import ru.yandex.practicum.grpc.telemetry.event.ScenarioAddedEventProto;
 import ru.yandex.practicum.grpc.telemetry.event.ScenarioConditionProto;
-import ru.yandex.practicum.kafka.KafkaEventProducer;
 import ru.yandex.practicum.kafka.telemetry.event.*;
 import ru.yandex.practicum.mapper.EnumMapper;
 
@@ -15,8 +17,8 @@ import java.util.List;
 @Component
 public class ScenarioAddedEventHandler extends BaseHubEventHandler<ScenarioAddedEventAvro> {
 
-    public ScenarioAddedEventHandler(KafkaEventProducer producer) {
-        super(producer);
+    public ScenarioAddedEventHandler(KafkaConfig kafkaConfig, KafkaTemplate<Void, SpecificRecordBase> kafkaTemplate) {
+        super(kafkaConfig, kafkaTemplate);
     }
 
     @Override

@@ -1,9 +1,11 @@
 package ru.yandex.practicum.service.hub;
 
+import org.apache.avro.specific.SpecificRecordBase;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
+import ru.yandex.practicum.config.kafka.KafkaConfig;
 import ru.yandex.practicum.grpc.telemetry.event.DeviceAddedEventProto;
 import ru.yandex.practicum.grpc.telemetry.event.HubEventProto;
-import ru.yandex.practicum.kafka.KafkaEventProducer;
 import ru.yandex.practicum.kafka.telemetry.event.DeviceAddedEventAvro;
 import ru.yandex.practicum.kafka.telemetry.event.DeviceTypeAvro;
 import ru.yandex.practicum.mapper.EnumMapper;
@@ -11,8 +13,8 @@ import ru.yandex.practicum.mapper.EnumMapper;
 @Component
 public class DeviceAddedEventHandler extends BaseHubEventHandler<DeviceAddedEventAvro> {
 
-    public DeviceAddedEventHandler(KafkaEventProducer producer) {
-        super(producer);
+    public DeviceAddedEventHandler(KafkaConfig kafkaConfig, KafkaTemplate<Void, SpecificRecordBase> kafkaTemplate) {
+        super(kafkaConfig, kafkaTemplate);
     }
 
     @Override

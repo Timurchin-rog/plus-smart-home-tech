@@ -1,10 +1,11 @@
 package ru.yandex.practicum.service;
 
+import lombok.AllArgsConstructor;
 import org.apache.avro.specific.SpecificRecordBase;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import ru.yandex.practicum.config.kafka.KafkaConfig;
 import ru.yandex.practicum.kafka.telemetry.event.SensorEventAvro;
 import ru.yandex.practicum.kafka.telemetry.event.SensorStateAvro;
 import ru.yandex.practicum.kafka.telemetry.event.SensorsSnapshotAvro;
@@ -15,11 +16,11 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class AggregatorServiceImpl implements AggregatorService {
-    private Map<String, SensorsSnapshotAvro> snapshots = new HashMap<>();
+    private Map<String, SensorsSnapshotAvro> snapshots;
 
-    @Value("${kafka.topics.snapshots-events}")
-    private String snapshotsTopic;
+    private KafkaConfig kafkaConfig;
 
     @Override
     public void aggregationSnapshot(Producer<Void, SpecificRecordBase> producer, SpecificRecordBase sensorEventAvro) {
@@ -27,7 +28,7 @@ public class AggregatorServiceImpl implements AggregatorService {
         Optional<SensorsSnapshotAvro> snapshotOpt = updateState(event);
         if (snapshotOpt.isPresent()) {
             SensorsSnapshotAvro snapshot = snapshotOpt.get();
-            producer.send(new ProducerRecord<>(snapshotsTopic, snapshot));
+            producer.send(new ProducerRecord<>(kafkaConfig.getTopics().get("snapshots"), snapshot));
         }
     }
 
