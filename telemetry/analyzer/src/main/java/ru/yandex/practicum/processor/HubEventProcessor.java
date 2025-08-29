@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.errors.WakeupException;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.config.kafka.KafkaConfig;
@@ -26,10 +27,9 @@ public class HubEventProcessor implements Runnable {
     private final KafkaConfig kafkaConfig;
     private String hubs = "hubs";
 
-    public HubEventProcessor(Consumer<Void, HubEventAvro> consumer,
-                             Set<HubEventHandler> handlers,
+    public HubEventProcessor(Set<HubEventHandler> handlers,
                              KafkaConfig kafkaConfig) {
-        this.consumer = consumer;
+        this.consumer = new KafkaConsumer<>(kafkaConfig.getConsumerHubProperties());
         this.handlers = handlers.stream()
                 .collect(Collectors.toMap(HubEventHandler::getMessageType, Function.identity()));
         this.kafkaConfig = kafkaConfig;

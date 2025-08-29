@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.errors.WakeupException;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.config.kafka.KafkaConfig;
@@ -22,10 +23,9 @@ public class SnapshotProcessor implements Runnable {
     private final KafkaConfig kafkaConfig;
     private String snaphots = "snapshots";
 
-    public SnapshotProcessor(Consumer<Void, SensorsSnapshotAvro> consumer,
-                             SnapshotHandler snapshotHandler,
+    public SnapshotProcessor(SnapshotHandler snapshotHandler,
                              KafkaConfig kafkaConfig) {
-        this.consumer = consumer;
+        this.consumer = new KafkaConsumer<>(kafkaConfig.getConsumerSnapshotProperties());
         this.snapshotHandler = snapshotHandler;
         this.kafkaConfig = kafkaConfig;
     }

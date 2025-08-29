@@ -1,17 +1,18 @@
 package ru.yandex.practicum.service.sensor;
 
+import org.apache.avro.specific.SpecificRecordBase;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.config.kafka.KafkaConfig;
 import ru.yandex.practicum.grpc.telemetry.event.LightSensorProto;
 import ru.yandex.practicum.grpc.telemetry.event.SensorEventProto;
-import ru.yandex.practicum.config.kafka.KafkaEventProducer;
 import ru.yandex.practicum.kafka.telemetry.event.LightSensorAvro;
 
 @Component
 public class LightSensorEventHandler extends BaseSensorEventHandler<LightSensorAvro> {
 
-    public LightSensorEventHandler(KafkaEventProducer producer, KafkaConfig kafkaConfig) {
-        super(producer, kafkaConfig);
+    public LightSensorEventHandler(KafkaConfig kafkaConfig, KafkaTemplate<Void, SpecificRecordBase> kafkaTemplate) {
+        super(kafkaConfig, kafkaTemplate);
     }
 
     @Override
