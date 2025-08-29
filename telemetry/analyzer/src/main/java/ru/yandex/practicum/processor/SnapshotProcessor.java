@@ -1,13 +1,12 @@
-package ru.yandex.practicum.consumer;
+package ru.yandex.practicum.processor;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.common.errors.WakeupException;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import ru.yandex.practicum.config.kafka.KafkaConfig;
 import ru.yandex.practicum.kafka.telemetry.event.SensorsSnapshotAvro;
 import ru.yandex.practicum.service.snapshot.SnapshotHandler;
 
@@ -16,18 +15,24 @@ import java.util.List;
 
 @Slf4j
 @Component
-@RequiredArgsConstructor
 public class SnapshotProcessor implements Runnable {
 
     private final Consumer<Void, SensorsSnapshotAvro> consumer;
     private final SnapshotHandler snapshotHandler;
+    private final KafkaConfig kafkaConfig;
+    private String snaphots = "snapshots";
 
-    @Value("${kafka.topics.snapshots-events}")
-    private String topic;
+    public SnapshotProcessor(Consumer<Void, SensorsSnapshotAvro> consumer,
+                             SnapshotHandler snapshotHandler,
+                             KafkaConfig kafkaConfig) {
+        this.consumer = consumer;
+        this.snapshotHandler = snapshotHandler;
+        this.kafkaConfig = kafkaConfig;
+    }
 
     public void run() {
         try {
-            consumer.subscribe(List.of(topic));
+            consumer.subscribe(List.of(kafkaConfig.getTopics().get(snaphots)));
             Runtime.getRuntime().addShutdownHook(new Thread(consumer::wakeup));
 
             while (true) {
@@ -42,7 +47,7 @@ public class SnapshotProcessor implements Runnable {
             }
         } catch (WakeupException ignored) {
         } catch (Exception e) {
-            log.error("Ошибка получения данных {}", topic);
+            log.error("Ошибка получения данных {}", kafkaConfig.getTopics().get(snaphots));
         } finally {
             try {
                 consumer.commitSync();

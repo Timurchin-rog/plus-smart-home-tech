@@ -1,24 +1,21 @@
 package ru.yandex.practicum.service.sensor;
 
 import com.google.protobuf.Timestamp;
+import lombok.RequiredArgsConstructor;
 import org.apache.avro.specific.SpecificRecordBase;
-import org.springframework.beans.factory.annotation.Value;
+import ru.yandex.practicum.config.kafka.KafkaConfig;
 import ru.yandex.practicum.grpc.telemetry.event.SensorEventProto;
-import ru.yandex.practicum.kafka.KafkaEventProducer;
+import ru.yandex.practicum.config.kafka.KafkaEventProducer;
 import ru.yandex.practicum.kafka.telemetry.event.SensorEventAvro;
 import ru.yandex.practicum.service.SensorEventHandler;
 
 import java.time.Instant;
 
+@RequiredArgsConstructor
 public abstract class BaseSensorEventHandler<T extends SpecificRecordBase> implements SensorEventHandler {
     protected final KafkaEventProducer producer;
-
-    @Value("${collector.kafka.topics.sensors-events}")
-    private String sensorsTopic;
-
-    public BaseSensorEventHandler(KafkaEventProducer producer) {
-        this.producer = producer;
-    }
+    protected final KafkaConfig kafkaConfig;
+    private final String sensors = "sensors";
 
     protected abstract T mapToAvro(SensorEventProto eventProto);
 
@@ -37,7 +34,7 @@ public abstract class BaseSensorEventHandler<T extends SpecificRecordBase> imple
                 .setPayload(payload)
                 .build();
 
-        producer.send(sensorsTopic, eventAvro);
+        producer.send(kafkaConfig.getTopics().get(sensors), eventAvro);
     }
 
     protected Instant mapToInstant(Timestamp timestamp) {

@@ -1,12 +1,12 @@
-package ru.yandex.practicum.consumer;
+package ru.yandex.practicum.processor;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.common.errors.WakeupException;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import ru.yandex.practicum.config.kafka.KafkaConfig;
 import ru.yandex.practicum.kafka.telemetry.event.HubEventAvro;
 import ru.yandex.practicum.service.HubEventHandler;
 
@@ -23,19 +23,22 @@ public class HubEventProcessor implements Runnable {
 
     private final Consumer<Void, HubEventAvro> consumer;
     private final Map<String, HubEventHandler> handlers;
-    @Value("${kafka.topics.hubs-events}")
-    private String hubsTopic;
+    private final KafkaConfig kafkaConfig;
+    private String hubs = "hubs";
 
-    public HubEventProcessor(Consumer<Void, HubEventAvro> consumer, Set<HubEventHandler> handlers) {
+    public HubEventProcessor(Consumer<Void, HubEventAvro> consumer,
+                             Set<HubEventHandler> handlers,
+                             KafkaConfig kafkaConfig) {
         this.consumer = consumer;
         this.handlers = handlers.stream()
-                .collect(Collectors.toMap(HubEventHandler::getMessageType, Function.identity()));;
+                .collect(Collectors.toMap(HubEventHandler::getMessageType, Function.identity()));
+        this.kafkaConfig = kafkaConfig;
     }
 
     @Override
     public void run() {
         try {
-            consumer.subscribe(List.of(hubsTopic));
+            consumer.subscribe(List.of(kafkaConfig.getTopics().get(hubs)));
             Runtime.getRuntime().addShutdownHook(new Thread(consumer::wakeup));
 
             while (true) {
@@ -56,7 +59,7 @@ public class HubEventProcessor implements Runnable {
         } catch (WakeupException ignored) {
 
         } catch (Exception e) {
-            log.error("Ошибка получения данных {}", hubsTopic);
+            log.error("Ошибка получения данных {}", hubs);
         } finally {
             try {
                 consumer.commitSync();
