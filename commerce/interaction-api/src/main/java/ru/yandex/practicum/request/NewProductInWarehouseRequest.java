@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
-import ru.yandex.practicum.dto.DimensionDto;
+import ru.yandex.practicum.dto.warehouse.DimensionDto;
 
 import java.util.UUID;
 
