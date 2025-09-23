@@ -1,5 +1,6 @@
 package ru.yandex.practicum.dto.cart;
 
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -12,9 +13,9 @@ import java.util.UUID;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ShoppingCartDto {
-    @NotNull
+    @org.hibernate.validator.constraints.UUID
     UUID shoppingCartId;
 
-    @NotNull
+    @NotNull @NotEmpty
     Map<UUID, Long> products;
 }

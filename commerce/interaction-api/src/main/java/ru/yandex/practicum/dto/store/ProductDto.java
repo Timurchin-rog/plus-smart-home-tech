@@ -20,6 +20,8 @@ import java.util.UUID;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProductDto {
+
+    @org.hibernate.validator.constraints.UUID
     UUID productId;
 
     @NotBlank

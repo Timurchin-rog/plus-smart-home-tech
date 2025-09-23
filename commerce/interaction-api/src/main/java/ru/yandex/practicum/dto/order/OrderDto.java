@@ -1,6 +1,8 @@
 package ru.yandex.practicum.dto.order;
 
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,27 +20,34 @@ import java.util.UUID;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class OrderDto {
 
-    @NotNull
+    @org.hibernate.validator.constraints.UUID
     UUID orderId;
 
-    @NotNull
+    @org.hibernate.validator.constraints.UUID
     UUID shoppingCartId;
 
-    @NotNull
+    @NotNull @NotEmpty
     List<OrderProductDto> products;
 
     @NotNull
     OrderState status;
 
+    @org.hibernate.validator.constraints.UUID
     UUID deliveryId;
 
+    @org.hibernate.validator.constraints.UUID
     UUID paymentId;
 
+    @Positive
     Double totalWeight;
+    @Positive
     Double totalVolume;
+    @Positive
     Boolean fragile;
 
+    @Positive
     BigDecimal totalPrice;
+    @Positive
     BigDecimal productsPrice;
     BigDecimal deliveryPrice;
 }

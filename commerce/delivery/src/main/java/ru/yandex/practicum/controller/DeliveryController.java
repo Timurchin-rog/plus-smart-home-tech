@@ -1,5 +1,6 @@
 package ru.yandex.practicum.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.dto.delivery.DeliveryDto;
@@ -17,27 +18,27 @@ public class DeliveryController {
     private final DeliveryService deliveryService;
 
     @PutMapping
-    public DeliveryDto planDelivery(@RequestBody DeliveryDto deliveryDto) {
+    public DeliveryDto planDelivery(@Valid @RequestBody DeliveryDto deliveryDto) {
         return deliveryService.planDelivery(deliveryDto);
     }
 
     @PostMapping("/picked")
-    public void deliveryPicked(@RequestParam UUID deliveryId) {
+    public void deliveryPicked(@RequestParam @org.hibernate.validator.constraints.UUID UUID deliveryId) {
         deliveryService.deliveryPicked(deliveryId);
     }
 
     @PostMapping("/failed")
-    public void deliveryFailed(@RequestParam UUID orderId) {
+    public void deliveryFailed(@RequestParam @org.hibernate.validator.constraints.UUID UUID orderId) {
         deliveryService.deliveryFailed(orderId);
     }
 
     @PostMapping("/successful")
-    public void deliverySuccess(@RequestParam UUID orderId) {
+    public void deliverySuccess(@RequestParam @org.hibernate.validator.constraints.UUID UUID orderId) {
         deliveryService.deliverySuccessful(orderId);
     }
 
     @PostMapping("/cost")
-    public BigDecimal deliveryCost(@RequestBody OrderDto orderDto) {
+    public BigDecimal deliveryCost(@Valid @RequestBody OrderDto orderDto) {
         return deliveryService.deliveryCost(orderDto);
     }
 }

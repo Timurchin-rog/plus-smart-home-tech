@@ -1,5 +1,6 @@
 package ru.yandex.practicum.dto.delivery;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -17,10 +18,10 @@ import java.util.UUID;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class DeliveryDto {
 
-    @NotNull
+    @org.hibernate.validator.constraints.UUID
     UUID deliveryId;
 
-    @NotNull
+    @org.hibernate.validator.constraints.UUID
     UUID orderId;
 
     @NotNull

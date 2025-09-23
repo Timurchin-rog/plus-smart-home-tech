@@ -1,5 +1,6 @@
 package ru.yandex.practicum.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.dto.order.OrderDto;
@@ -17,27 +18,27 @@ public class PaymentController {
     private final PaymentService paymentService;
 
     @PostMapping
-    PaymentDto payment(@RequestBody OrderDto orderDto) {
+    PaymentDto payment(@Valid @RequestBody OrderDto orderDto) {
         return paymentService.payment(orderDto);
     }
 
     @PostMapping("/totalCost")
-    BigDecimal getTotalCost(@RequestBody OrderDto orderDto) {
+    BigDecimal getTotalCost(@Valid @RequestBody OrderDto orderDto) {
         return paymentService.getTotalCost(orderDto);
     }
 
     @PostMapping("/success")
-    void paymentSuccess(@RequestParam UUID paymentId) {
+    void paymentSuccess(@RequestParam @org.hibernate.validator.constraints.UUID UUID paymentId) {
         paymentService.paymentSuccess(paymentId);
     }
 
     @PostMapping("/productCost")
-    BigDecimal productCost(@RequestBody OrderDto orderDto) {
+    BigDecimal productCost(@Valid @RequestBody OrderDto orderDto) {
         return paymentService.productCost(orderDto);
     }
 
     @PostMapping("failed")
-    void paymentFailed(@RequestParam UUID paymentId) {
+    void paymentFailed(@RequestParam @org.hibernate.validator.constraints.UUID UUID paymentId) {
         paymentService.paymentFailed(paymentId);
     }
 }

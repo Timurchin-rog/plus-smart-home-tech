@@ -17,10 +17,10 @@ import java.util.UUID;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PaymentDto {
 
-    @NotNull
+    @org.hibernate.validator.constraints.UUID
     UUID paymentId;
 
-    @NotNull
+    @org.hibernate.validator.constraints.UUID
     UUID orderId;
 
     @NotNull

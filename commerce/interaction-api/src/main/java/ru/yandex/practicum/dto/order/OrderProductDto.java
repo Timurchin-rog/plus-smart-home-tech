@@ -1,6 +1,7 @@
 package ru.yandex.practicum.dto.order;
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -15,12 +16,12 @@ import java.util.UUID;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class OrderProductDto {
 
-    @NotNull
+    @org.hibernate.validator.constraints.UUID
     UUID productId;
 
-    @NotNull
+    @Positive
     Long quantity;
 
-    @NotNull
+    @Positive
     BigDecimal price;
 }

@@ -13,6 +13,10 @@ import java.util.UUID;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ShippedToDeliveryRequest {
+
+    @org.hibernate.validator.constraints.UUID
     UUID orderId;
+
+    @org.hibernate.validator.constraints.UUID
     UUID deliveryId;
 }

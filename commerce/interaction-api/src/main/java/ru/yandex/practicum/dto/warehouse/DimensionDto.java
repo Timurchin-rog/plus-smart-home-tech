@@ -11,10 +11,13 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class DimensionDto {
+
     @Positive
     Double width;
+
     @Positive
     Double height;
+
     @Positive
     Double depth;
 }
