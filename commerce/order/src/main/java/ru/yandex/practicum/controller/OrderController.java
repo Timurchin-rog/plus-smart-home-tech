@@ -29,54 +29,53 @@ public class OrderController {
         return orderService.createNewOrder(request);
     }
 
-    @PostMapping("/{orderId}/pay")
-    public OrderDto payOrder(@PathVariable @org.hibernate.validator.constraints.UUID UUID orderId) {
+    @PostMapping("/{order-id}/pay")
+    public OrderDto payOrder(@PathVariable(name = "order-id") @org.hibernate.validator.constraints.UUID UUID orderId) {
         return orderService.payment(orderId);
     }
 
-    @PostMapping("/{orderId}/payment-failed")
-    public OrderDto paymentFailed(@PathVariable @org.hibernate.validator.constraints.UUID UUID orderId) {
+    @PostMapping("/{order-id}/payment-failed")
+    public OrderDto paymentFailed(@PathVariable(name = "order-id") @org.hibernate.validator.constraints.UUID UUID orderId) {
         return orderService.paymentFailed(orderId);
     }
 
-    @PostMapping("/{orderId}/delivery")
-    public OrderDto delivery(@PathVariable @org.hibernate.validator.constraints.UUID UUID orderId) {
+    @PostMapping("/{order-id}/delivery")
+    public OrderDto delivery(@PathVariable(name = "order-id") @org.hibernate.validator.constraints.UUID UUID orderId) {
         return orderService.delivery(orderId);
     }
 
-    @PostMapping("/{orderId}/delivery-failed")
-    public OrderDto deliveryFailed(@PathVariable @org.hibernate.validator.constraints.UUID UUID orderId) {
+    @PostMapping("/{order-id}/delivery-failed")
+    public OrderDto deliveryFailed(@PathVariable(name = "order-id") @org.hibernate.validator.constraints.UUID UUID orderId) {
         return orderService.deliveryFailed(orderId);
     }
 
-    @PostMapping("/{orderId}/assembly")
-    public OrderDto assembleOrder(@PathVariable @org.hibernate.validator.constraints.UUID UUID orderId) {
+    @PostMapping("/{order-id}/assembly")
+    public OrderDto assembleOrder(@PathVariable(name = "order-id") @org.hibernate.validator.constraints.UUID UUID orderId) {
         return orderService.assembly(orderId);
     }
 
-    @PostMapping("/{orderId}/assembly-failed")
-    public OrderDto assemblyFailed(@PathVariable @org.hibernate.validator.constraints.UUID UUID orderId) {
+    @PostMapping("/{order-id}/assembly-failed")
+    public OrderDto assemblyFailed(@PathVariable(name = "order-id") @org.hibernate.validator.constraints.UUID UUID orderId) {
         return orderService.assemblyFailed(orderId);
     }
 
-    @PostMapping("/{orderId}/return")
-    public OrderDto returnOrder(@PathVariable @org.hibernate.validator.constraints.UUID UUID orderId,
-                                @RequestBody ProductReturnRequest request) {
+    @PostMapping("/return")
+    public OrderDto returnOrder(@RequestBody @Valid ProductReturnRequest request) {
         return orderService.productReturn(request);
     }
 
-    @PostMapping("/{orderId}/calculate/total")
-    public OrderDto calculateTotalCost(@PathVariable @org.hibernate.validator.constraints.UUID UUID orderId) {
+    @PostMapping("/{order-id}/calculate/total")
+    public OrderDto calculateTotalCost(@PathVariable(name = "order-id") @org.hibernate.validator.constraints.UUID UUID orderId) {
         return orderService.calculateTotalCost(orderId);
     }
 
-    @PostMapping("/{orderId}/calculate/delivery")
-    public OrderDto calculateDeliveryCost(@PathVariable @org.hibernate.validator.constraints.UUID UUID orderId) {
+    @PostMapping("/{order-id}/calculate/delivery")
+    public OrderDto calculateDeliveryCost(@PathVariable(name = "order-id") @org.hibernate.validator.constraints.UUID UUID orderId) {
         return orderService.calculateDeliveryCost(orderId);
     }
 
-    @PostMapping("/{orderId}/completed")
-    public OrderDto completed(@PathVariable @org.hibernate.validator.constraints.UUID UUID orderId) {
+    @PostMapping("/{order-id}/completed")
+    public OrderDto completed(@PathVariable(name = "order-id") @org.hibernate.validator.constraints.UUID UUID orderId) {
         return orderService.completed(orderId);
     }
 }

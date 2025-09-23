@@ -5,8 +5,8 @@ import ru.yandex.practicum.dto.warehouse.AssemblyProductForOrderFromShoppingCart
 import ru.yandex.practicum.dto.warehouse.BookedProductsDto;
 import ru.yandex.practicum.dto.cart.ShoppingCartDto;
 import ru.yandex.practicum.dto.warehouse.ShippedToDeliveryRequest;
-import ru.yandex.practicum.request.AddProductToWarehouseRequest;
-import ru.yandex.practicum.request.NewProductInWarehouseRequest;
+import ru.yandex.practicum.dto.warehouse.AddProductToWarehouseRequest;
+import ru.yandex.practicum.dto.warehouse.NewProductInWarehouseRequest;
 
 import java.util.UUID;
 

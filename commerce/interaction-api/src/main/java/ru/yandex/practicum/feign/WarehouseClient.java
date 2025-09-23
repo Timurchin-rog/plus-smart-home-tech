@@ -8,8 +8,8 @@ import ru.yandex.practicum.dto.warehouse.AssemblyProductForOrderFromShoppingCart
 import ru.yandex.practicum.dto.warehouse.BookedProductsDto;
 import ru.yandex.practicum.dto.cart.ShoppingCartDto;
 import ru.yandex.practicum.dto.warehouse.ShippedToDeliveryRequest;
-import ru.yandex.practicum.request.AddProductToWarehouseRequest;
-import ru.yandex.practicum.request.NewProductInWarehouseRequest;
+import ru.yandex.practicum.dto.warehouse.AddProductToWarehouseRequest;
+import ru.yandex.practicum.dto.warehouse.NewProductInWarehouseRequest;
 
 import java.util.UUID;
 
@@ -23,20 +23,22 @@ public interface WarehouseClient {
     BookedProductsDto checkProductQuantity(@RequestBody @Valid ShoppingCartDto shoppingCartDto);
 
     @PostMapping("/add")
-    void updateProductQuantity(@RequestBody AddProductToWarehouseRequest addProductToWarehouseRequest);
+    void updateProductQuantity(@RequestBody @Valid AddProductToWarehouseRequest addProductToWarehouseRequest);
 
     @GetMapping("/address")
     AddressDto getAddress();
 
-    @PostMapping("/orders/{orderId}/ship/{deliveryId}")
-    void shipOrder(@PathVariable UUID orderId, @PathVariable UUID deliveryId);
+    @PostMapping("/orders/{order-id}/ship/{delivery-id}")
+    void shipOrder(@PathVariable(name = "order-id") @org.hibernate.validator.constraints.UUID UUID orderId,
+                   @PathVariable(name = "delivery-id") @org.hibernate.validator.constraints.UUID UUID deliveryId);
 
-    @PostMapping("/orders/{orderId}/return")
-    void returnProducts(@PathVariable UUID orderId, @RequestBody @Valid BookedProductsDto bookedProducts);
+    @PostMapping("/orders/{order-id}/return")
+    void returnProducts(@PathVariable(name = "order-id") @org.hibernate.validator.constraints.UUID UUID orderId,
+                        @RequestBody @Valid BookedProductsDto bookedProducts);
 
     @PostMapping("/orders/assemble")
     BookedProductsDto assembleOrder(@RequestBody @Valid AssemblyProductForOrderFromShoppingCartRequest request);
 
     @PostMapping("/shipped")
-    void shippedToDelivery(@RequestBody ShippedToDeliveryRequest request);
+    void shippedToDelivery(@RequestBody @Valid ShippedToDeliveryRequest request);
 }

@@ -1,5 +1,6 @@
 package ru.yandex.practicum.feign;
 
+import jakarta.validation.Valid;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.dto.delivery.DeliveryDto;
@@ -12,17 +13,18 @@ import java.util.UUID;
 public interface DeliveryClient {
 
     @PutMapping
-    DeliveryDto planDelivery(@RequestBody DeliveryDto deliveryDto);
+    DeliveryDto planDelivery(@RequestBody @Valid DeliveryDto deliveryDto);
 
     @PostMapping("/cost")
-    BigDecimal deliveryCost(@RequestBody OrderDto orderDto);
+    BigDecimal deliveryCost(@RequestBody @Valid OrderDto orderDto);
 
-    @PostMapping("/{deliveryId}/success")
-    void deliverySuccess(@PathVariable UUID deliveryId);
+    @PostMapping("/{delivery-id}/success")
+    void deliverySuccess(@PathVariable(name = "delivery-id") @org.hibernate.validator.constraints.UUID UUID deliveryId);
 
-    @PostMapping("/{deliveryId}/failed")
-    void deliveryFailed(@PathVariable UUID deliveryId);
+    @PostMapping("/{delivery-id}/failed")
+    void deliveryFailed(@PathVariable(name = "delivery-id") @org.hibernate.validator.constraints.UUID UUID deliveryId);
 
-    @PostMapping("/{orderId}/shipped")
-    void shippedToDelivery(@PathVariable UUID orderId, @RequestParam UUID deliveryId);
+    @PostMapping("/{order-id}/shipped")
+    void shippedToDelivery(@PathVariable(name = "order-id") @org.hibernate.validator.constraints.UUID UUID orderId,
+                           @RequestParam @org.hibernate.validator.constraints.UUID UUID deliveryId);
 }

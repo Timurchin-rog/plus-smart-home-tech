@@ -1,4 +1,4 @@
-package ru.yandex.practicum.request;
+package ru.yandex.practicum.dto.warehouse;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -7,7 +7,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
-import ru.yandex.practicum.dto.warehouse.DimensionDto;
 
 import java.util.UUID;
 
@@ -16,9 +15,10 @@ import java.util.UUID;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class NewProductInWarehouseRequest {
-    @NotNull
+    @org.hibernate.validator.constraints.UUID
     UUID productId;
 
+    @NotNull
     Boolean fragile;
 
     @NotNull

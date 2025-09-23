@@ -14,12 +14,11 @@ import ru.yandex.practicum.mapper.WarehouseMapper;
 import ru.yandex.practicum.model.Address;
 import ru.yandex.practicum.model.Warehouse;
 import ru.yandex.practicum.repository.WarehouseRepository;
-import ru.yandex.practicum.request.AddProductToWarehouseRequest;
-import ru.yandex.practicum.request.NewProductInWarehouseRequest;
+import ru.yandex.practicum.dto.warehouse.AddProductToWarehouseRequest;
+import ru.yandex.practicum.dto.warehouse.NewProductInWarehouseRequest;
 
 import java.util.Map;
 import java.util.UUID;
-import java.util.function.LongUnaryOperator;
 
 @Service
 @RequiredArgsConstructor

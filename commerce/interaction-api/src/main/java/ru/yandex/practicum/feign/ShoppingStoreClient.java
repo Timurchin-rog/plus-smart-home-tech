@@ -1,6 +1,7 @@
 package ru.yandex.practicum.feign;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.domain.Page;
@@ -27,15 +28,15 @@ public interface ShoppingStoreClient {
     ProductDto updateProduct(@RequestBody ProductDto updateProductDto);
 
     @PostMapping("/removeProductFromStore")
-    Boolean removeProduct(@RequestBody @NotNull UUID productId);
+    Boolean removeProduct(@RequestBody @org.hibernate.validator.constraints.UUID UUID productId);
 
     @PostMapping("/quantityState")
-    Boolean updateQuantityState(@RequestParam @NotNull UUID productId,
+    Boolean updateQuantityState(@RequestParam @org.hibernate.validator.constraints.UUID UUID productId,
                                 @RequestParam @NotNull QuantityState quantityState);
 
     @GetMapping("/{product-id}")
-    ProductDto getProductById(@PathVariable @NotNull UUID productId);
+    ProductDto getProductById(@PathVariable(name = "product-id") @org.hibernate.validator.constraints.UUID UUID productId);
 
     @PostMapping("/products/ids")
-    Map<UUID, ProductDto> findAllByIds(@RequestBody Set<UUID> ids);
+    Map<UUID, ProductDto> findAllByIds(@RequestBody @NotNull @NotEmpty Set<UUID> ids);
 }

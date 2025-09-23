@@ -22,7 +22,7 @@ public class PaymentController {
         return paymentService.payment(orderDto);
     }
 
-    @PostMapping("/totalCost")
+    @PostMapping("/total-cost")
     BigDecimal getTotalCost(@Valid @RequestBody OrderDto orderDto) {
         return paymentService.getTotalCost(orderDto);
     }
@@ -32,7 +32,7 @@ public class PaymentController {
         paymentService.paymentSuccess(paymentId);
     }
 
-    @PostMapping("/productCost")
+    @PostMapping("/product-cost")
     BigDecimal productCost(@Valid @RequestBody OrderDto orderDto) {
         return paymentService.productCost(orderDto);
     }

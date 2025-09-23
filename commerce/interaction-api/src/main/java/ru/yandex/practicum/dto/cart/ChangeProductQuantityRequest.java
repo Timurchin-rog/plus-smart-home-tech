@@ -1,6 +1,7 @@
-package ru.yandex.practicum.request;
+package ru.yandex.practicum.dto.cart;
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -11,9 +12,9 @@ import java.util.UUID;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ChangeProductQuantityRequest {
-    @NotNull
+    @org.hibernate.validator.constraints.UUID
     UUID productId;
 
-    @NotNull
+    @Positive
     Long newQuantity;
 }

@@ -14,7 +14,7 @@ import ru.yandex.practicum.feign.WarehouseClient;
 import ru.yandex.practicum.mapper.CartMapper;
 import ru.yandex.practicum.model.ShoppingCart;
 import ru.yandex.practicum.repository.CartRepository;
-import ru.yandex.practicum.request.ChangeProductQuantityRequest;
+import ru.yandex.practicum.dto.cart.ChangeProductQuantityRequest;
 
 import java.util.*;
 
