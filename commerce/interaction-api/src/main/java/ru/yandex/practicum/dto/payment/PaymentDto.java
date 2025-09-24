@@ -1,6 +1,7 @@
 package ru.yandex.practicum.dto.payment;
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,15 +24,15 @@ public class PaymentDto {
     @org.hibernate.validator.constraints.UUID
     UUID orderId;
 
-    @NotNull
+    @Positive
     BigDecimal productsPrice;
 
-    @NotNull
+    @Positive
     BigDecimal deliveryPrice;
 
-    @NotNull
+    @Positive
     BigDecimal totalPrice;
 
-    @NotNull
+    @Positive
     PaymentState status;
 }

@@ -38,5 +38,5 @@ public interface ShoppingStoreClient {
     ProductDto getProductById(@PathVariable(name = "product-id") @org.hibernate.validator.constraints.UUID UUID productId);
 
     @PostMapping("/products/ids")
-    Map<UUID, ProductDto> findAllByIds(@RequestBody @NotNull @NotEmpty Set<UUID> ids);
+    Map<UUID, ProductDto> findAllByIds(@RequestBody @NotEmpty Set<UUID> ids);
 }

@@ -16,6 +16,6 @@ public class ShoppingCartDto {
     @org.hibernate.validator.constraints.UUID
     UUID shoppingCartId;
 
-    @NotNull @NotEmpty
+    @NotEmpty
     Map<UUID, Long> products;
 }

@@ -1,6 +1,7 @@
 package ru.yandex.practicum.controller;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -29,7 +30,7 @@ public class StoreController {
     }
 
     @GetMapping("/{product-id}")
-    public ProductDto getProductById(@PathVariable(name = "product-id") @NotNull UUID productId) {
+    public ProductDto getProductById(@PathVariable(name = "product-id") @org.hibernate.validator.constraints.UUID UUID productId) {
         return storeService.getProductById(productId);
     }
 
@@ -44,18 +45,18 @@ public class StoreController {
     }
 
     @PostMapping("/removeProductFromStore")
-    public Boolean removeProduct(@RequestBody @NotNull UUID productId) {
+    public Boolean removeProduct(@RequestBody @org.hibernate.validator.constraints.UUID UUID productId) {
         return storeService.removeProduct(productId);
     }
 
     @PostMapping("/quantityState")
-    public Boolean updateQuantityState(@RequestParam @NotNull UUID productId,
+    public Boolean updateQuantityState(@RequestParam @org.hibernate.validator.constraints.UUID UUID productId,
                                        @RequestParam @NotNull QuantityState quantityState) {
         return storeService.updateQuantityState(productId, quantityState);
     }
 
     @PostMapping("/products/ids")
-    public Map<UUID, ProductDto> findAllByIds(@RequestBody Set<UUID> ids) {
+    public Map<UUID, ProductDto> findAllByIds(@RequestBody @NotEmpty Set<UUID> ids) {
         return ids.stream()
                 .collect(Collectors.toMap(
                         id -> id,

@@ -20,6 +20,6 @@ public class ProductReturnRequest {
     @org.hibernate.validator.constraints.UUID
     UUID orderId;
 
-    @NotNull @NotEmpty
+    @NotEmpty
     Map<UUID, Long> products;
 }

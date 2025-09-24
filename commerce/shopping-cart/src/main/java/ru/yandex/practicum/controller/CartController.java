@@ -27,7 +27,7 @@ public class CartController {
 
     @PutMapping
     public ShoppingCartDto addProduct(@RequestParam @NotBlank String username,
-                                      @RequestBody @NotNull @NotEmpty Map<UUID, Long> request) {
+                                      @RequestBody @NotEmpty Map<UUID, Long> request) {
         return cartService.addProduct(username, request);
     }
 
@@ -38,7 +38,7 @@ public class CartController {
 
     @PostMapping("/remove")
     public ShoppingCartDto removeProduct(@RequestParam @NotBlank String username,
-                                         @RequestBody @NotNull @NotEmpty Set<UUID> productsId) {
+                                         @RequestBody @NotEmpty Set<UUID> productsId) {
         return cartService.removeProduct(username, productsId);
     }
 

@@ -26,7 +26,7 @@ public class OrderDto {
     @org.hibernate.validator.constraints.UUID
     UUID shoppingCartId;
 
-    @NotNull @NotEmpty
+    @NotEmpty
     List<OrderProductDto> products;
 
     @NotNull
@@ -49,5 +49,6 @@ public class OrderDto {
     BigDecimal totalPrice;
     @Positive
     BigDecimal productsPrice;
+    @Positive
     BigDecimal deliveryPrice;
 }
