@@ -6,13 +6,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.yandex.practicum.dto.ProductDto;
-import ru.yandex.practicum.enums.QuantityState;
-import ru.yandex.practicum.enums.ProductState;
+import ru.yandex.practicum.dto.store.ProductDto;
+import ru.yandex.practicum.enums.store.QuantityState;
+import ru.yandex.practicum.enums.store.ProductState;
 import ru.yandex.practicum.exception.NotFoundException;
 import ru.yandex.practicum.mapper.ProductMapper;
 import ru.yandex.practicum.model.Product;
-import ru.yandex.practicum.enums.ProductCategory;
+import ru.yandex.practicum.enums.store.ProductCategory;
 import ru.yandex.practicum.repository.ProductRepository;
 
 import java.util.UUID;

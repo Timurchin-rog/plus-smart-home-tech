@@ -3,7 +3,7 @@ package ru.yandex.practicum.model;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import ru.yandex.practicum.enums.CartState;
+import ru.yandex.practicum.enums.cart.CartState;
 
 import java.util.Map;
 import java.util.UUID;
@@ -33,5 +33,5 @@ public class ShoppingCart {
             joinColumns = @JoinColumn(name = "cart_id"))
     @MapKeyColumn(name = "product_id")
     @Column(name = "quantity")
-    Map<UUID, Integer> products;
+    Map<UUID, Long> products;
 }

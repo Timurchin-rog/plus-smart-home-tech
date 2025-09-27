@@ -20,6 +20,7 @@
         <module>infra</module>
         <module>commerce</module>
         <module>commerce/warehouse</module>
+        <module>commerce/payment</module>
     </modules>
 
     <properties>

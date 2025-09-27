@@ -3,10 +3,11 @@ package ru.yandex.practicum.model;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import ru.yandex.practicum.enums.ProductCategory;
-import ru.yandex.practicum.enums.ProductState;
-import ru.yandex.practicum.enums.QuantityState;
+import ru.yandex.practicum.enums.store.ProductCategory;
+import ru.yandex.practicum.enums.store.ProductState;
+import ru.yandex.practicum.enums.store.QuantityState;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
@@ -44,5 +45,5 @@ public class Product {
     ProductCategory productCategory;
 
     @Column(name = "price", nullable = false)
-    Float price;
+    BigDecimal price;
 }

@@ -5,16 +5,16 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.yandex.practicum.dto.BookedProductsDto;
-import ru.yandex.practicum.dto.ShoppingCartDto;
-import ru.yandex.practicum.enums.CartState;
+import ru.yandex.practicum.dto.warehouse.BookedProductsDto;
+import ru.yandex.practicum.dto.cart.ShoppingCartDto;
+import ru.yandex.practicum.enums.cart.CartState;
 import ru.yandex.practicum.exception.NoProductsInShoppingCartException;
 import ru.yandex.practicum.exception.NotFoundException;
 import ru.yandex.practicum.feign.WarehouseClient;
 import ru.yandex.practicum.mapper.CartMapper;
 import ru.yandex.practicum.model.ShoppingCart;
 import ru.yandex.practicum.repository.CartRepository;
-import ru.yandex.practicum.request.ChangeProductQuantityRequest;
+import ru.yandex.practicum.dto.cart.ChangeProductQuantityRequest;
 
 import java.util.*;
 
@@ -34,7 +34,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public ShoppingCartDto addProduct(String username, Map<UUID, Integer> products) {
+    public ShoppingCartDto addProduct(String username, Map<UUID, Long> products) {
         ShoppingCart cart = getOrCreateCart(username);
         cartRepository.save(cart);
 
@@ -80,14 +80,14 @@ public class CartServiceImpl implements CartService {
     public ShoppingCartDto updateProductQuantity(String username, ChangeProductQuantityRequest requestDto) {
         ShoppingCart cart = checkShoppingCart(username);
 
-        Map<UUID, Integer> products = cart.getProducts();
+        Map<UUID, Long> products = cart.getProducts();
         if (products == null) {
             products = new HashMap<>();
             cart.setProducts(products);
         }
 
         UUID productId = requestDto.getProductId();
-        Integer newQuantity = requestDto.getNewQuantity();
+        Long newQuantity = requestDto.getNewQuantity();
 
         if (!products.containsKey(productId)) {
             throw new NoProductsInShoppingCartException(String.format("Товар с ID %s отсутствует в корзине", productId));
@@ -122,12 +122,12 @@ public class CartServiceImpl implements CartService {
                 });
     }
 
-    private void mergeProducts(Map<UUID, Integer> existingProducts, Map<UUID, Integer> newProducts) {
+    private void mergeProducts(Map<UUID, Long> existingProducts, Map<UUID, Long> newProducts) {
         if (existingProducts == null) {
             throw new IllegalStateException("Существующие продукты не могут быть null");
         }
         newProducts.forEach((productId, quantity) ->
-                existingProducts.merge(productId, quantity, Integer::sum));
+                existingProducts.merge(productId, quantity, Long::sum));
     }
 
     private void checkWarehouseAvailability(ShoppingCart cart) {
